@@ -7,6 +7,7 @@ use eip1962::traits::{FieldElement,ZeroAndOne};
 use eip1962::extension_towers::fp12_as_2_over3_over_2::{Fp12};
 
 fn bench_two_point_pairing() {
+    let start = Instant::now();
     let gt_one = Fp12::one(&BLS12_381_EXTENSION_12_FIELD);
 
     let mut p = BLS12_381_G1_GENERATOR.clone().mul(vec![27]);
@@ -20,7 +21,6 @@ fn bench_two_point_pairing() {
     p2.normalize();
     q2.normalize();
 
-    let start = Instant::now();
     let res = BLS12_381_PAIRING_ENGINE.pair(&[p.clone(), p2.clone()], &[q.clone(), q2.clone()]).unwrap();
     let duration = start.elapsed();
     println!("Time elapsed in bench() is: {:?}", duration);
